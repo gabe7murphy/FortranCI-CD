@@ -1,10 +1,17 @@
-node {
-    checkout scm
-
-    docker.withRegistry('https://registry.example.com') {
-
-        docker.image('gabe7murphy/myfortranimage:1.0').inside {
-            sh 'make test'
+pipeline {
+    agent {
+    	dockerfile true
+    }
+    stages {
+        stage('Build') {
+            agent {
+                docker {
+                    image 'gabe7murphy/myfortranimage-1.0'
+                }
+            }
+            steps {
+                sh 'gradle --version'
+            }
         }
     }
 }
